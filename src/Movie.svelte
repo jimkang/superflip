@@ -1,20 +1,28 @@
 <script>
 import { movie } from './store';
+import { Picture } from './picture';
 
-function onAddPicturesClick() {
-  movie.set({ pictures: $movie.pictures.concat([{ seconds: 0.5 }]) });
+function onImagePickerChange() {
+  var newPictures = [];
+  for (var i = 0; i < this.files.length; ++i) {
+    newPictures.push(Picture(this.files[i]));
+  }
+  console.log(newPictures);
+  movie.set({ pictures: $movie.pictures.concat(newPictures) });
 }
+
 </script>
 
 <section>
-  <button id="add-pictures-button" on:click={onAddPicturesClick}>Add Pictures</button>
+  <h3>Pick pictures to add:</h3>
+  <input id="image-picker" on:change={onImagePickerChange} type="file" multiple accept="image/*">
 
   <ul class="picture-list">
-    {#each $movie.pictures as { blob, seconds }, i }
-      <li>
+    {#each $movie.pictures as { file, seconds }, i }
+      <li class="picture">
         <h1>{i}</h1>
         <div>Seconds: <input type="number" step="0.1" value="{seconds}"></div>
-        <img src="{blob}">
+        <img src="{URL.createObjectURL(file)}">
       </li>
     {/each}
   </ul>

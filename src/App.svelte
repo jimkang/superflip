@@ -1,10 +1,10 @@
 <script>
   import Movie from './Movie.svelte';
-	export let name;
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
+  <h1>Super Flip-O-Rama!</h1>
+  <div>Make your stop-motion movie here. (Or just put together an animated gif of any kind.)</div>
   <Movie />
 </main>
 
@@ -12,15 +12,7 @@
 	main {
 		text-align: center;
 		padding: 1em;
-		max-width: 240px;
 		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
 	}
 
 	@media (min-width: 640px) {

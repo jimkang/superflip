@@ -17,6 +17,7 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "gif.js": "github:jimkang/gif.js",
     "sirv-cli": "^0.4.4"
   }
 }

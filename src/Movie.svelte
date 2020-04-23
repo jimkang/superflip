@@ -1,18 +1,3 @@
-<script>
-import { movie } from './store';
-import { Picture } from './picture';
-
-function onImagePickerChange() {
-  var newPictures = [];
-  for (var i = 0; i < this.files.length; ++i) {
-    newPictures.push(Picture(this.files[i]));
-  }
-  console.log(newPictures);
-  movie.set({ pictures: $movie.pictures.concat(newPictures) });
-}
-
-</script>
-
 <section>
   <h3>Pick pictures to add:</h3>
   <input id="image-picker" on:change={onImagePickerChange} type="file" multiple accept="image/*">
@@ -29,4 +14,44 @@ function onImagePickerChange() {
 
   <button id="make-gif-button" on:click={onMakeGifClick}>Make gif!</button>
 
+  <img id="result-gif">
 </section>
+
+<canvas id="frame-canvas"></canvas>
+
+<style>
+.picture-list {
+  max-width: 90%;
+}
+
+.picture img {
+  max-height: 50vh;
+}
+
+#frame-canvas {
+  display: none;
+}
+</style>
+
+<script>
+import { movie } from './store';
+import { Picture } from './picture';
+import { picturesToAnimatedGif } from './pictures-to-animated-gif';
+
+function onImagePickerChange() {
+  var newPictures = [];
+  for (var i = 0; i < this.files.length; ++i) {
+    newPictures.push(Picture(this.files[i]));
+  }
+  console.log(newPictures);
+  movie.set({ pictures: $movie.pictures.concat(newPictures) });
+}
+
+function onMakeGifClick() {
+  var gifBuffer = picturesToAnimatedGif({ canvas: document.getElementById('frame-canvas'), width: 500, height: 500, pictures: $movie.pictures });
+  console.log('gifBuffer', gifBuffer);
+  var resultGifImg = document.getElementById('result-gif');
+  resultGifImg.src = URL.createObjectURL(new Blob([gifBuffer.buffer], { type: 'image/gif' }));
+}
+
+</script>

@@ -15,7 +15,7 @@ build:
 	./node_modules/.bin/rollup -c
 
 sync:
-	rsync -a public/ $(USER)@$(SERVER):$(APPDIR)/public
+	rsync -a public/ $(USER)@$(SERVER):$(APPDIR)
 
 set-up-server-dir:
-	ssh $(USER)@$(SERVER) "mkdir -p $(APPDIR)/public/build"
+	ssh $(USER)@$(SERVER) "mkdir -p $(APPDIR)/build"

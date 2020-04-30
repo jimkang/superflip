@@ -6,7 +6,7 @@
     {#each $movie.pictures as { file, seconds }, i }
       <li class="picture">
         <h1>{i}</h1>
-        <div>Seconds: <input type="number" step="0.1" value="{seconds}"></div>
+        <div>Seconds: <input type="number" step="0.1" bind:value="{seconds}"></div>
         <img src="{URL.createObjectURL(file)}" alt="Picture {i}">
       </li>
     {/each}

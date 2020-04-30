@@ -7,14 +7,15 @@
       <li class="picture">
         <h1>{i}</h1>
         <div>Seconds: <input type="number" step="0.1" value="{seconds}"></div>
-        <img src="{URL.createObjectURL(file)}">
+        <img src="{URL.createObjectURL(file)}" alt="Picture {i}">
       </li>
     {/each}
   </ul>
 
   <button id="make-gif-button" on:click={onMakeGifClick}>Make gif!</button>
 
-  <img id="result-gif">
+  <img id="result-gif" alt="The resulting movie gif!">
+  <em>Right-click or hold your finger down over the gif to download it.</em>
 </section>
 
 <canvas id="frame-canvas"></canvas>

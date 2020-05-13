@@ -77,3 +77,11 @@ button:not(:disabled):active {
 button:focus {
 	border-color: #666;
 }
+
+#version-info {
+  position: absolute;
+  right: 1.5em;
+  top: 1.5em;
+  font-size: 0.5em;
+  color: #666;
+}

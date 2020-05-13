@@ -48,8 +48,9 @@ function onImagePickerChange() {
   movie.set({ pictures: $movie.pictures.concat(newPictures) });
 }
 
-function onMakeGifClick() {
-  var gifBuffer = picturesToAnimatedGif({ canvas: document.getElementById('frame-canvas'), width: 500, height: 500, pictures: $movie.pictures });
+async function onMakeGifClick() {
+  // TODO: Resize canvas to picture proportions
+  var gifBuffer = await picturesToAnimatedGif({ canvas: document.getElementById('frame-canvas'), width: 800, height: 600, pictures: $movie.pictures });
   console.log('gifBuffer', gifBuffer);
   var resultGifImg = document.getElementById('result-gif');
   resultGifImg.src = URL.createObjectURL(new Blob([gifBuffer.buffer], { type: 'image/gif' }));

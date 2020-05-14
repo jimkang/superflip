@@ -14,6 +14,9 @@ prettier:
 build:
 	./node_modules/.bin/rollup -c
 
+build-worker:
+	cd worker && ../node_modules/.bin/rollup -c
+
 sync:
 	rsync -a public/ $(USER)@$(SERVER):$(APPDIR)
 

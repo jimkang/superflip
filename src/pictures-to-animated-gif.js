@@ -12,6 +12,8 @@ export async function picturesToAnimatedGif({
     throw new Error('No pictures passed to picturesToAnimatedGif.');
   }
 
+  var worker = new Worker('build/worker.js');
+
   canvas.width = width;
   canvas.height = height;
   var ctx = canvas.getContext('2d');
@@ -40,11 +42,13 @@ export async function picturesToAnimatedGif({
     // the next tick.
     await new Promise(waitATick);
     ctx.drawImage(img, 0, 0, width, height);
+
     encoder.setRepeat(0);
     // TODO: Not sure this is actually working. Look into it.
     encoder.setDelay(picture.seconds * 100);
     var imageDataWrapper = ctx.getImageData(0, 0, width, height);
     encoder.addFrame(imageDataWrapper.data);
+    worker.postMessage(imageDataWrapper.data);
   }
 }
 

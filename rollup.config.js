@@ -1,3 +1,5 @@
+/* global process */
+
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
@@ -6,6 +8,9 @@ import { terser } from 'rollup-plugin-terser';
 import json from '@rollup/plugin-json';
 
 const production = !process.env.ROLLUP_WATCH;
+const unminify = process.env.UNMINIFY;
+
+//console.log('flags', production, unminify);
 
 export default {
   input: 'src/main.js',
@@ -47,7 +52,7 @@ export default {
 
     // If we're building for production (npm run build
     // instead of npm run dev), minify
-    production && terser(),
+    production && !unminify && terser(),
 
     json()
   ],

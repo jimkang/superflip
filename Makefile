@@ -14,6 +14,9 @@ prettier:
 build:
 	./node_modules/.bin/rollup -c
 
+build-unminified:
+	UNMINIFY=1 ./node_modules/.bin/rollup -c
+
 sync:
 	rsync -a public/ $(USER)@$(SERVER):$(APPDIR)
 

@@ -6,6 +6,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import json from '@rollup/plugin-json';
+import babel from '@rollup/plugin-babel';
 
 const production = !process.env.ROLLUP_WATCH;
 const unminify = process.env.UNMINIFY;
@@ -54,7 +55,8 @@ export default {
     // instead of npm run dev), minify
     production && !unminify && terser(),
 
-    json()
+    json(),
+    babel({ babelHelpers: 'bundled' })
   ],
   watch: {
     clearScreen: false

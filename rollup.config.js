@@ -57,8 +57,9 @@ export default {
 
     json(),
     babel({
-      babelHelpers: 'bundled',
-      presets: [['@babel/preset-env', { targets: { firefox: 45, safari: 5 } }]]
+      babelHelpers: 'bundled'
+      //presets: [['@babel/preset-env', { targets: { firefox: 45, safari: 5 } }]],
+      //plugins: ['@babel/plugin-transform-runtime']
     })
   ],
   watch: {

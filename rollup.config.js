@@ -56,7 +56,10 @@ export default {
     production && !unminify && terser(),
 
     json(),
-    babel({ babelHelpers: 'bundled' })
+    babel({
+      babelHelpers: 'bundled',
+      presets: [['@babel/preset-env', { targets: { firefox: 45, safari: 5 } }]]
+    })
   ],
   watch: {
     clearScreen: false

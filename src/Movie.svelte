@@ -7,7 +7,7 @@
       <li class="picture">
         <h1>{i}</h1>
         <div>Seconds: <input type="number" step="0.1" bind:value="{seconds}"></div>
-        <img src="{URL.createObjectURL(file)}" alt="Picture {i}">
+        <img src="{URL.createObjectURL(file)}" alt="Picture {i}" class="picture-img" decoding="sync">
       </li>
     {/each}
   </ul>
@@ -51,7 +51,7 @@ function onImagePickerChange() {
 
 async function onMakeGifClick() {
   // TODO: Resize canvas to picture proportions
-  var { error, values } = await ep(picturesToAnimatedGif, { width: 800, height: 600, pictures: $movie.pictures });
+  var { error, values } = await ep(picturesToAnimatedGif, { imgNodeList: document.querySelectorAll('.picture-img'), pictures: $movie.pictures });
   if (error) {
     // TODO: Display error.
     console.error('Error while encoding gif.', error);

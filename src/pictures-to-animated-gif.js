@@ -19,7 +19,7 @@ export function picturesToAnimatedGif({ width, height, pictures }, done) {
     var img = new Image(width, height);
     img.src = URL.createObjectURL(picture.file);
     const delay = picture.seconds * 1000;
-    gif.addFrame(img, { delay });
+    gif.addFrame(img, { delay, copy: true, dispose: 2 });
   }
 
   function passBlob(blob) {

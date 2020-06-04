@@ -1,6 +1,6 @@
 export function Picture(file) {
   return {
     file,
-    seconds: 0.5
+    seconds: 1
   };
 }

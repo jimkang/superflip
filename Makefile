@@ -13,6 +13,7 @@ prettier:
 
 build:
 	./node_modules/.bin/rollup -c
+	cp node_modules/gif.js/dist/gif.worker.js public
 
 build-unminified:
 	UNMINIFY=1 ./node_modules/.bin/rollup -c

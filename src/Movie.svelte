@@ -1,3 +1,38 @@
+<script>
+import { movie } from './store';
+import { Picture } from './picture';
+import { picturesToAnimatedGif } from './pictures-to-animated-gif';
+import ep from 'errorback-promise';
+
+function onImagePickerChange() {
+  var newPictures = [];
+  for (var i = 0; i < this.files.length; ++i) {
+    newPictures.push(Picture(this.files[i]));
+  }
+  console.log(newPictures);
+  movie.set({ pictures: $movie.pictures.concat(newPictures) });
+}
+
+async function onMakeGifClick() {
+  // TODO: Resize canvas to picture proportions
+  var { error, values } = await ep(picturesToAnimatedGif, { imgNodeList: document.querySelectorAll('.picture-img'), pictures: $movie.pictures });
+  if (error) {
+    // TODO: Display error.
+    console.error('Error while encoding gif.', error);
+    return;
+  }
+  if (values.length < 1) {
+    // TODO: Display error.
+    console.error('Error while encoding gif.', new Error('No values passed back from picturesToAnimatedGif.'));
+    return;
+  }
+
+  var resultGifImg = document.getElementById('result-gif');
+  resultGifImg.src = URL.createObjectURL(values[0], { type: 'image/gif' });
+}
+
+</script>
+
 <section>
   <h3>Pick pictures to add:</h3>
   <input id="image-picker" on:change={onImagePickerChange} type="file" multiple accept="image/*">
@@ -33,38 +68,3 @@
   display: none;
 }
 </style>
-
-<script>
-import { movie } from './store';
-import { Picture } from './picture';
-import { picturesToAnimatedGif } from './pictures-to-animated-gif';
-import ep from 'errorback-promise';
-
-function onImagePickerChange() {
-  var newPictures = [];
-  for (var i = 0; i < this.files.length; ++i) {
-    newPictures.push(Picture(this.files[i]));
-  }
-  console.log(newPictures);
-  movie.set({ pictures: $movie.pictures.concat(newPictures) });
-}
-
-async function onMakeGifClick() {
-  // TODO: Resize canvas to picture proportions
-  var { error, values } = await ep(picturesToAnimatedGif, { imgNodeList: document.querySelectorAll('.picture-img'), pictures: $movie.pictures });
-  if (error) {
-    // TODO: Display error.
-    console.error('Error while encoding gif.', error);
-    return;
-  }
-  if (values.length < 1) {
-    // TODO: Display error.
-    console.error('Error while encoding gif.', new Error('No values passed back from picturesToAnimatedGif.'));
-    return;
-  }
-
-  var resultGifImg = document.getElementById('result-gif');
-  resultGifImg.src = URL.createObjectURL(values[0], { type: 'image/gif' });
-}
-
-</script>

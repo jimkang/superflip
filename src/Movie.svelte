@@ -5,16 +5,24 @@ import ep from 'errorback-promise';
 
 $: pictures = [];
 
+// TODO: Make this user-configurable
+let maxSideLength = 1024;
+
 function onImagePickerChange() {
   var newPictures = [];
   for (var i = 0; i < this.files.length; ++i) {
-    newPictures.push({ seconds: 1, file: this.files[i] });
+    newPictures.push({
+      seconds: 1,
+      file: this.files[i],
+      maxSideLength,
+      width: 0,
+      height: 0
+    });
   }
   pictures = newPictures;
 }
 
 async function onMakeGifClick() {
-  // TODO: Resize canvas to picture proportions
   var { error, values } = await ep(picturesToAnimatedGif, { imgNodeList: document.querySelectorAll('.picture-img'), pictures });
   if (error) {
     // TODO: Display error.
@@ -30,7 +38,6 @@ async function onMakeGifClick() {
   var resultGifImg = document.getElementById('result-gif');
   resultGifImg.src = URL.createObjectURL(values[0], { type: 'image/gif' });
 }
-
 </script>
 
 <section>
@@ -38,8 +45,8 @@ async function onMakeGifClick() {
   <input id="image-picker" on:change={onImagePickerChange} type="file" multiple accept="image/*">
 
   <ul class="picture-list">
-    {#each pictures as { file, seconds }, index }
-      <Picture index={index} file={file} seconds={seconds} />
+    {#each pictures as picture, index }
+      <Picture index={index} picture={picture} />
     {/each}
   </ul>
 

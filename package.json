@@ -1,5 +1,6 @@
 {
-  "name": "svelte-app",
+  "name": "super-flip-o-rama",
+  "private": true,
   "version": "1.0.6",
   "scripts": {
     "build": "rollup -c",
@@ -24,6 +25,9 @@
   "dependencies": {
     "errorback-promise": "^1.0.0",
     "gif.js": "github:jimkang/gif.js",
-    "sirv-cli": "^0.4.4"
+    "image-canvas-ops": "^1.0.3",
+    "oknok": "^3.0.0",
+    "sirv-cli": "^0.4.4",
+    "svelte-error-message": "^1.0.1"
   }
 }

@@ -5,9 +5,13 @@ export function picturesToAnimatedGif({ imgNodeList, pictures }, done) {
     throw new Error('No pictures passed to picturesToAnimatedGif.');
   }
 
+  var enclosingBox = pictures.reduce(getEnclosingBox, { width: 0, height: 0 });
+
   var gif = new GIF({
     workers: 2,
-    quality: 10
+    quality: 10,
+    width: enclosingBox.width,
+    height: enclosingBox.height
   });
 
   for (var i = 0; i < imgNodeList.length; ++i) {
@@ -26,4 +30,14 @@ export function picturesToAnimatedGif({ imgNodeList, pictures }, done) {
   function passBlob(blob) {
     done(null, blob);
   }
+}
+
+function getEnclosingBox(box, picture) {
+  if (picture.width > box.width) {
+    box.width = picture.width;
+  }
+  if (picture.height > box.height) {
+    box.height = picture.height;
+  }
+  return box;
 }

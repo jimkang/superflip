@@ -1,21 +1,21 @@
 <script>
-import { movie } from './store';
-import { Picture } from './picture';
+import Picture from './Picture.svelte';
 import { picturesToAnimatedGif } from './pictures-to-animated-gif';
 import ep from 'errorback-promise';
+
+$: pictures = [];
 
 function onImagePickerChange() {
   var newPictures = [];
   for (var i = 0; i < this.files.length; ++i) {
-    newPictures.push(Picture(this.files[i]));
+    newPictures.push({ seconds: 1, file: this.files[i] });
   }
-  console.log(newPictures);
-  movie.set({ pictures: $movie.pictures.concat(newPictures) });
+  pictures = newPictures;
 }
 
 async function onMakeGifClick() {
   // TODO: Resize canvas to picture proportions
-  var { error, values } = await ep(picturesToAnimatedGif, { imgNodeList: document.querySelectorAll('.picture-img'), pictures: $movie.pictures });
+  var { error, values } = await ep(picturesToAnimatedGif, { imgNodeList: document.querySelectorAll('.picture-img'), pictures });
   if (error) {
     // TODO: Display error.
     console.error('Error while encoding gif.', error);
@@ -38,12 +38,8 @@ async function onMakeGifClick() {
   <input id="image-picker" on:change={onImagePickerChange} type="file" multiple accept="image/*">
 
   <ul class="picture-list">
-    {#each $movie.pictures as { file, seconds }, i }
-      <li class="picture">
-        <h1>{i}</h1>
-        <div>Seconds: <input type="number" step="0.1" bind:value="{seconds}"></div>
-        <img src="{URL.createObjectURL(file)}" alt="Picture {i}" class="picture-img" decoding="sync">
-      </li>
+    {#each pictures as { file, seconds }, index }
+      <Picture index={index} file={file} seconds={seconds} />
     {/each}
   </ul>
 

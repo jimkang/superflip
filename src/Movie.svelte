@@ -4,6 +4,7 @@ import { picturesToAnimatedGif } from './pictures-to-animated-gif';
 import ep from 'errorback-promise';
 
 $: pictures = [];
+let resultGifBlob;
 
 // TODO: Make this user-configurable
 let maxSideLength = 1024;
@@ -39,8 +40,7 @@ async function onMakeGifClick() {
     return;
   }
 
-  var resultGifImg = document.getElementById('result-gif');
-  resultGifImg.src = URL.createObjectURL(values[0], { type: 'image/gif' });
+  resultGifBlob = values[0];
 }
 </script>
 
@@ -56,8 +56,10 @@ async function onMakeGifClick() {
 
   <button id="make-gif-button" on:click={onMakeGifClick}>Make gif!</button>
 
-  <img id="result-gif" alt="The resulting movie gif!">
-  <em>Right-click or hold your finger down over the gif to download it.</em>
+  {#if resultGifBlob }
+    <img id="result-gif" src={URL.createObjectURL(resultGifBlob, { type: 'image/gif' })} alt="The resulting movie gif!">
+    <em>Right-click or hold your finger down over the gif to download it.</em>
+  {/if}
 </section>
 
 <canvas id="frame-canvas"></canvas>

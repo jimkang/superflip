@@ -23,7 +23,11 @@ function onImagePickerChange() {
 }
 
 async function onMakeGifClick() {
-  var { error, values } = await ep(picturesToAnimatedGif, { imgNodeList: document.querySelectorAll('.picture-img'), pictures });
+  var imgNodeList = document.querySelectorAll('.picture-img');
+  var { error, values } = await ep(
+    picturesToAnimatedGif, { imgNodeList, pictures }
+  );
+
   if (error) {
     // TODO: Display error.
     console.error('Error while encoding gif.', error);

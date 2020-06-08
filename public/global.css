@@ -78,6 +78,12 @@ button:focus {
 	border-color: #666;
 }
 
+.centered-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #version-info {
   position: absolute;
   right: 1.5em;

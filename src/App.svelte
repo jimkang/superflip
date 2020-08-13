@@ -4,7 +4,7 @@
 </script>
 
 <main>
-  <h1>Super Flip-O-Rama!</h1>
+  <h1>Superflip!</h1>
   <div>Make your animated gif here! (For free, without being tracked or hassled.)</div>
   <Movie />
 

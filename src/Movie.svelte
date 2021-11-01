@@ -14,7 +14,7 @@ function onImagePickerChange() {
   var newPictures = [];
   for (var i = 0; i < this.files.length; ++i) {
     newPictures.push({
-      seconds: 1,
+      seconds: 0.3,
       file: this.files[i],
       maxSideLength,
       width: 0,

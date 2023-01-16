@@ -1,7 +1,7 @@
 {
   "name": "superflip",
   "private": true,
-  "version": "1.0.12",
+  "version": "1.1.0",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",

@@ -6,6 +6,7 @@ import ep from 'errorback-promise';
 $: pictures = [];
 let resultGifBlob;
 let processingInProgress = false;
+let defaultSecondsPerFrame = 0.3;
 
 // TODO: Make this user-configurable
 let maxSideLength = 1024;
@@ -14,7 +15,7 @@ function onImagePickerChange() {
   var newPictures = [];
   for (var i = 0; i < this.files.length; ++i) {
     newPictures.push({
-      seconds: 0.3,
+      seconds: defaultSecondsPerFrame,
       file: this.files[i],
       maxSideLength,
       width: 0,
@@ -51,6 +52,7 @@ async function onMakeGifClick() {
 </script>
 
 <section class="centered-col">
+  <div>Number of seconds to play each picture for: <input type="number" step="0.1" bind:value="{defaultSecondsPerFrame}"></div>
   <h3>Pick pictures to add:</h3>
   <input id="image-picker" on:change={onImagePickerChange} type="file" multiple accept="image/*">
 
